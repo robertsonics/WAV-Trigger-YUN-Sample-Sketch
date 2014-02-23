@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+	<title>WAV Trigger Control</title>
+	<script type="text/javascript" src="zepto.min.js"></script>
+	
+    <script type="text/javascript">
+
+	var value;
+
+    $(document).ready(function() {
+
+      $('#myonoffswitch').click(function() {                
+        if ($(this).is(':checked')) {
+          trackOn();
+        } else {
+          trackOff();
+        }
+      });
+    });
+
+    function trackOn() {      
+        //send 1 to arduino
+        $.get('/arduino/track/1', function() {});
+    }
+
+    function trackOff() {      
+        //send 0 to arduino
+        $.get('/arduino/track/0', function() {});
+    }
+
+	function sendVal() {		  	
+        $.get('/arduino/volume/' + value, function() {});
+	}
+
+	function updateVal(val) {
+        value = val; 
+        $("#val").text(value);
+        sendVal();
+    }
+      
+    </script>
+
+	
+<style type="text/css">
+    
+    html {
+        margin: 3em;
+        background: #f0f0f0;
+        text-align: center;
+    }
+       
+	body {
+		text-align:center;
+		margin: 30px 0;
+	}
+	
+	div 
+	{
+		text-align:center;
+	}
+		
+	h1 
+	{
+		font-size:2em;
+		font-family: sans-serif;
+		color: #0311a8;
+		margin: 30px;
+	}
+	
+    .onoffswitch 
+    {
+        display:inline-block;
+        position: relative; width: 90px; text-align: center;
+        -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    }
+
+    .onoffswitch-checkbox {
+        display: none;
+    }
+
+    .onoffswitch-label {
+        display: block; overflow: hidden; cursor: pointer;
+        border: 2px solid #999999; border-radius: 20px;
+    }
+
+    .onoffswitch-inner {
+        width: 200%; margin-left: -100%;
+        -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+        -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+    }
+
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+        font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+        -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    }
+
+    .onoffswitch-inner:before {
+        content: "ON";
+        padding-left: 10px;
+        background-color: #FF0000; color: #FFFFFF;
+    }
+
+    .onoffswitch-inner:after {
+        content: "OFF";
+        padding-right: 10px;
+        background-color: #EEEEEE; color: #999999;
+        text-align: right;
+    }
+
+    .onoffswitch-switch {
+        width: 18px; margin: 6px;
+        background: #FFFFFF;
+        border: 2px solid #999999; border-radius: 20px;
+        position: absolute; top: 0; bottom: 0; right: 56px;
+        -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+        -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    }
+
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left: 0;
+    }
+
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right: 0px; 
+    }
+    
+	input[type="range"]{
+		outline:none;
+		-webkit-appearance:none; 
+		-moz-appearance:none; 
+		width:200px;
+		height: 10px;
+		-webkit-border-radius:10px; 
+		-moz-border-radius:10px; 
+		-ms-border-radius:10px; 
+		-o-border-radius:10px;
+		background-color: #CCC;
+	}
+
+	input::-webkit-slider-thumb{
+		-webkit-appearance:none; 
+		-moz-appearance:none; 
+		width:30px; 
+		height:30px;
+		-webkit-border-radius:30px; 
+		-moz-border-radius:30px; 
+		-ms-border-radius:30px; 
+		-o-border-radius:30px; 
+		border-radius:30px;
+		background: #0311a8;
+	}
+
+	#val {
+		font-size: 1em;
+		font-family: sans-serif;
+		color: #00B0B3;
+	}    
+
+</style>
+
+</head>
+
+<body>
+
+    <h1>WAV Trigger</h1>
+	<p>Track 1 Control</p>
+	<br>
+    <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" unchecked>
+        <label class="onoffswitch-label" for="myonoffswitch">
+            <div class="onoffswitch-inner"></div>
+            <div class="onoffswitch-switch"></div>
+        </label>
+    </div>
+    <br><br><br> 
+    <p>Volume</p>     
+ 	<input type="range" min="-70" max="10" step="1" onchange="updateVal(this.value);">
+	<p id="val">0</p>
+       	    
+</body>
