@@ -20,5 +20,5 @@ else might be going on.
 
 In the meantime, this will serve as a basic example of how to use the
 WAV Trigger Arduino library, which is also in its early stages of
-development. Please see the readme file it the library repo for current
-limitations.
+development. Please see the readme file in the corresponding library repo
+for current limitations.
