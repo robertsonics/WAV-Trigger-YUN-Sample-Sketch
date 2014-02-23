@@ -8,6 +8,8 @@ The single html page provides one ON/OFF toggle switch and one range
 slider, and the sketch is written to turn on (with looping enabled),
 turn off and control the volume of track 1. that's it.
 
+![screenshot](/pictures/example1.jpg)
+
 I have noticed that mobile browsers don't update the volume slider
 value while it is moving. Desktop Chrome does, but this somehow messes
 up the communication path for a bit. The sketch limits changes to
